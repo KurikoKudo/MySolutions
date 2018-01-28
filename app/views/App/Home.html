@@ -2,8 +2,8 @@
 {{template "header.html" .}}
 
 <div class="container">
-  <div class="col-md-2"></div>
-  <div class="col-md-8 center">
+  <div class="col-md-1"></div>
+  <div class="col-md-10 center">
     <div class="row">
       <h1 class="text-center">{{ .text }}</h1>
       <p></p>
@@ -14,25 +14,24 @@
           <div class="col-md-12">
             <form method="POST" action="/App/Search">
 
-
-          <div class="row form-group">
-            <span><label for="all" id="all-label" class="text-danger col-md-3 text-center">all</label>
-						<div class="col-md-9 w-100"><input type="text" name="all" id="all" class="form-control" placeholder="all"></div></span>
-          </div>
-
             <div class="row form-group">
-            <span><label for="ptitle" id="ptitle-label" class="text-danger col-md-3 text-center">page title</label>
-						<div class="col-md-9 w-100"><input type="text" name="ptitle" id="ptitle" class="form-control" placeholder="page title"></div></span>
+            <span><label for="ptitle" id="ptitle-label" class="text-danger col-md-2 text-center">page title</label>
+						<div class="col-md-10 w-100"><input type="text" name="ptitle" id="ptitle" class="form-control" placeholder="page title"></div></span>
             </div>
 
             <div class="row form-group">
-            <span><label for="tags" id="tags-label" class="text-danger col-md-3 text-center">tags</label>
-						<div class="col-md-9 w-100"><input type="text" name="tags" id="tags" class="form-control" placeholder="tags"></div></span>
+            <span><label for="tags" id="tags-label" class="text-danger col-md-2 text-center">tags</label>
+						<div class="col-md-10 w-100"><input type="text" name="tags" id="tags" class="form-control" placeholder="tags"></div></span>
             </div>
 
             <div class="row form-group">
-            <span><label for="ecode" id="ecode-label" class="text-danger col-md-3 text-center">error code</label>
-						<div class="col-md-9 w-100"><input type="text" name="ecode" id="ecode" class="form-control" placeholder="error code"></div></span>
+            <span><label for="ecode" id="ecode-label" class="text-danger col-md-2 text-center">error code</label>
+						<div class="col-md-10 w-100"><input type="text" name="ecode" id="ecode" class="form-control" placeholder="error code"></div></span>
+            </div>
+
+            <div class="row form-group">
+              <span><label for="body" id="body-label" class="text-danger col-md-2 text-center">body</label>
+              <div class="col-md-10 w-100"><input type="text" name="body" id="body" class="form-control" placeholder="body"></div></span>
             </div>
 
             <div class="row">
@@ -42,6 +41,9 @@
             </div>
 
 
+
+
+
           </div>
         </div>
       </div>
@@ -49,7 +51,7 @@
 
     </div>
   </div>
-  <div class="col-md-2"></div>
+  <div class="col-md-1"></div>
 </div>
 
 

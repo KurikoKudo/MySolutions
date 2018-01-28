@@ -1,18 +1,75 @@
-{{set . "title" "Search"}}
+{{set . "title" "Home"}}
 {{template "header.html" .}}
 
-<header class="jumbotron" style="background-color:#A9F16C">
-  <div class="container">
-    <div class="row">
-      <h1>{{ .all }}</h1>
-      <h1>{{ .ptitle }}</h1>
-      <h1>{{ .tags }}</h1>
-      <h1>{{ .ecode }}</h1>
+<div class="container">
+  <div class="col-md-1"></div>
+  <div class="col-md-10 center">
 
-      <p></p>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="search col-md-12">
+          <h3 class="text-center">Please Enter Your Problem...</h3>
+          <div class="col-md-12">
+            <form method="POST" action="/App/Search">
+
+            <div class="row form-group">
+            <span><label for="ptitle" id="ptitle-label" class="text-danger col-md-2 text-center">page title</label>
+						<div class="col-md-10 w-100"><input type="text" name="ptitle" id="ptitle" class="form-control" placeholder="page title"></div></span>
+            </div>
+
+            <div class="row form-group">
+            <span><label for="tags" id="tags-label" class="text-danger col-md-2 text-center">tags</label>
+						<div class="col-md-10 w-100"><input type="text" name="tags" id="tags" class="form-control" placeholder="tags"></div></span>
+            </div>
+
+            <div class="row form-group">
+            <span><label for="ecode" id="ecode-label" class="text-danger col-md-2 text-center">error code</label>
+						<div class="col-md-10 w-100"><input type="text" name="ecode" id="ecode" class="form-control" placeholder="error code"></div></span>
+            </div>
+
+            <div class="row form-group">
+              <span><label for="body" id="body-label" class="text-danger col-md-2 text-center">body</label>
+              <div class="col-md-10 w-100"><input type="text" name="body" id="body" class="form-control" placeholder="body"></div></span>
+            </div>
+
+            <div class="row">
+              <div class="col-md-2 col-md-offset-5">
+                <input type="submit" id="search-btn" class="btn search-btn center-block" value="Search">
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="row">
+        <div class="search-result col-md-10 col-md-offset-1">
+          <h3>Results
+          <span class="pull-right">{{.listlen}} matched</span></h3>
+        </div>
+
+        <div class="search-result col-md-10 col-md-offset-1">
+          <ul>
+           {{range .list}}
+           <li>
+           <a href="/App/Page">{{ .PageTitle}}</a>
+         </li>
+           {{ end }}
+           <ul>
+        </div>
+    </div>
+
+
+
+
   </div>
-</header>
+  <div class="col-md-1"></div>
+</div>
+
+
 
 <div class="container">
   <div class="row">
