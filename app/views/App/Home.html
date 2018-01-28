@@ -1,0 +1,70 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+
+<div class="container">
+  <div class="col-md-2"></div>
+  <div class="col-md-8 center">
+    <div class="row">
+      <h1 class="text-center">{{ .text }}</h1>
+      <p></p>
+
+      <div class="col-md-12">
+        <div class="search col-md-12">
+          <h3 class="text-center">Please Enter Your Problem...</h3>
+          <div class="col-md-12">
+            <form method="POST" href="">
+
+
+          <div class="row form-group">
+            <span><label for="all" id="all-label" class="text-danger col-md-3 text-center">all</label>
+						<div class="col-md-9 w-100"><input type="text" name="all" id="all" class="form-control" placeholder="all"></div></span>
+          </div>
+
+            <div class="row form-group">
+            <span><label for="title" id="title-label" class="text-danger col-md-3 text-center">title</label>
+						<div class="col-md-9 w-100"><input type="text" name="title" id="title" class="form-control" placeholder="title"></div></span>
+            </div>
+
+            <div class="row form-group">
+            <span><label for="tags" id="tags-label" class="text-danger col-md-3 text-center">tags</label>
+						<div class="col-md-9 w-100"><input type="text" name="tags" id="tags" class="form-control" placeholder="tags"></div></span>
+            </div>
+
+            <div class="row form-group">
+            <span><label for="complete" id="complete-label" class="text-danger col-md-3 text-center">complete</label>
+						<div class="col-md-9 w-100"><input type="text" name="complete" id="complete" class="form-control" placeholder="complete"></div></span>
+            </div>
+
+            <div class="row form-group">
+            <span><label for="error-code" id="error-code-label" class="text-danger col-md-3 text-center">error code</label>
+						<div class="col-md-9 w-100"><input type="text" name="error-code" id="error-code" class="form-control" placeholder="error code"></div></span>
+            </div>
+
+            <div class="row">
+              <div class="col-md-2 col-md-offset-5">
+                <button type="submit" id="search-btn" class="btn search-btn center-block" >検索</button>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</div>
+
+{{template "footer.html" .}}
