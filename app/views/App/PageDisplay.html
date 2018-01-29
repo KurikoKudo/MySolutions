@@ -1,0 +1,117 @@
+{{set . "title" "MySolutions"}}
+{{template "header.html" .}}
+
+<div class="container">
+  <div class="col-md-1"></div>
+  <div class="col-md-10 center">
+
+    <div class="row">
+      <h1 class="text-center page">{{ .page.PageTitle }}</h1>
+    </div>
+
+    <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <form method="POST" action="/App/Search">
+        {{range .page.TagName}}
+        <input type="hidden" name="tags" value="{{.}}" >
+        <input type="submit" class="btn tag-btn" value="{{.}}">
+        &nbsp;&nbsp;
+        {{ end }}
+      </form>
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+  <div class="row page">
+    <div class="col-md-1"></div>
+    <div class="col-md-10"><h3>Error Code</h3>
+
+      {{.page.ErrorCode}}
+
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+  <div class="row page">
+    <div class="col-md-1"></div>
+    <div class="col-md-10"><h3>Error</h3>
+
+      {{.page.ErrorAbst}}
+
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+  <div class="row page">
+    <div class="col-md-1"></div>
+    <div class="col-md-10"><h3>Details</h3>
+
+      {{.page.ErrorDetail}}
+
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+  <div class="row page">
+    <div class="col-md-1"></div>
+    <div class="col-md-10"><h3>Solutions</h3>
+
+      {{.page.Solutions}}
+
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+  <div class="row page">
+    <div class="col-md-1"></div>
+    <div class="col-md-10"><h3>Reference</h3>
+
+      {{.page.Reference}}
+
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+  <div class="row page">
+    <div class="col-md-1"></div>
+    <div class="col-md-10"><h3>Condition</h3>
+
+      {{.page.Complete}}
+
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+  <div class="row page">
+    <div class="col-md-1"></div>
+    <div class="col-md-10"><h3>Reration Pages</h3>
+
+      {{range .page.Relations}}
+
+      <a href="/App/PageDisplay?pageId={{.}}">pageid={{.}}</a>
+
+      {{end}}
+
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+
+
+  </div>
+  <div class="col-md-1"></div>
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</div>
+
+{{template "footer.html" .}}
