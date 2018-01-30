@@ -68,7 +68,9 @@
     <div class="col-md-1"></div>
     <div class="col-md-10"><h3>Reference</h3>
 
-      {{.page.Reference}}
+      {{range .page.Reference}}
+      <a href="{{.Link}}">{{.LinkTitle}}</a>
+      {{end}}
 
     </div>
     <div class="col-md-1"></div>
@@ -88,9 +90,9 @@
     <div class="col-md-1"></div>
     <div class="col-md-10"><h3>Reration Pages</h3>
 
-      {{range .page.Relations}}
+      {{range .page.RelationPage}}
 
-      <a href="/App/PageDisplay?pageId={{.}}">pageid={{.}}</a>
+      <a href="/App/PageDisplay?pageId={{.PageId}}">{{.PageTitle}}</a>
 
       {{end}}
 

@@ -5,6 +5,11 @@ type Reference struct{
 	LinkTitle	string
 }
 
+type Title struct{
+	PageId 		int
+	PageTitle string
+}
+
 type Page struct{
 	PageId			int
 	PageTitle		string
@@ -19,10 +24,6 @@ type Page struct{
 	Importance	int
 	Complete		bool
 	TagName			[]string
-	Relations		[]int
-}
-
-type Title struct{
-	PageId 		int
-	PageTitle string
+	Relation		[]int
+	RelationPage[]Title
 }

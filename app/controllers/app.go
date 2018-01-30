@@ -48,6 +48,7 @@ if(c.Params.Form.Get("ecode") != ""){
 	list = DBSearch(body,ptitle,tags,ecode)
 
 	listlen := len(list)
+	fmt.Println("長さ：",listlen)
 
 	return c.Render(list,listlen)
 }
@@ -63,7 +64,11 @@ func (c App) PageDisplay(pageId int) revel.Result {
 
 	var relations []int
 	relations = DBRelations(pageId)
-	page.Relations = relations
+	page.Relation = relations
+
+	var relationPage []models.Title
+	relationPage = DBTitlelist(relations)
+	page.RelationPage = relationPage
 
 	var references []models.Reference
 	references = DBReferences(pageId)
@@ -111,11 +116,11 @@ func (c App) PageDisplay(pageId int) revel.Result {
 		}
 
 
-		//fmt.Println(sqlsentence)
+		fmt.Println(sqlsentence)
 
 
 
-    rows, err := db.Query(sqlsentence + ";") //
+    rows, err := db.Query(sqlsentence) //
     if err != nil {
       panic(err.Error())
     }
@@ -272,12 +277,12 @@ func (c App) PageDisplay(pageId int) revel.Result {
 
 				}
 
-				fmt.Println(columns[i], ": ", value)
+				//fmt.Println(columns[i], ": ", value)
 			}
 
 
 
-			fmt.Println("-----------------------------------")
+			//fmt.Println("-----------------------------------")
 		}
 
 		return page;
@@ -331,12 +336,12 @@ func DBTags(pageId int) []string {
 				tagList = append(tagList,value)
 			}
 
-			fmt.Println(columns[i], ": ", value)
+			//fmt.Println(columns[i], ": ", value)
 		}
 
 
 
-		fmt.Println("-----------------------------------")
+		//fmt.Println("-----------------------------------")
 	}
 
 	return tagList
@@ -389,7 +394,7 @@ func DBRelations(pageId int) []int {
 			valueId,err = strconv.Atoi(value)
 			if(valueId != pageId){
 				pageList = append(pageList,valueId)
-				fmt.Println(valueId,"addList")
+				//fmt.Println(valueId,"addList")
 			}
 
 			fmt.Println(columns[i], ": ", value)
@@ -411,7 +416,7 @@ func DBReferences(pageId int) []models.Reference {
 	}
 	defer db.Close() // 関数がリターンする直前に呼び出される
 
-	rows, err := db.Query("SELECT pages.page_id,references.page_id,references.link,references.link_title FROM reference INNER JOIN pages ON references.page_id = pages.page_id WHERE references.page_id = ? ",pageId) //
+	rows, err := db.Query("SELECT pages.page_id,reference.page_id,reference.link,reference.link_title FROM reference INNER JOIN pages ON reference.page_id = pages.page_id WHERE reference.page_id = ? ",pageId) //
 	if err != nil {
 		panic(err.Error())
 	}
@@ -457,14 +462,88 @@ func DBReferences(pageId int) []models.Reference {
 			}
 
 
-			fmt.Println(columns[i], ": ", value)
+			//fmt.Println(columns[i], ": ", value)
 		}
 
 		referenceList = append(referenceList,reference)
 
-		fmt.Println("-----------------------------------")
+		//fmt.Println("-----------------------------------")
 	}
 
 	return referenceList
+
+}
+
+func DBTitlelist(list []int) []models.Title {
+	db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close() // 関数がリターンする直前に呼び出される
+
+	sqlsentence := "SELECT * FROM pages WHERE 0 "
+
+	for i:=0; i < len(list); i++{
+		str :=strconv.Itoa(list[i])
+		sqlsentence += "OR page_id = " + str
+	}
+
+	fmt.Println(sqlsentence)
+	rows, err := db.Query(sqlsentence) //
+	if err != nil {
+		panic(err.Error())
+	}
+
+	columns, err := rows.Columns() // カラム名を取得
+	if err != nil {
+		panic(err.Error())
+	}
+
+	values := make([]sql.RawBytes, len(columns))
+
+	//  rows.Scan は引数に `[]interface{}`が必要.
+
+	scanArgs := make([]interface{}, len(values))
+	for i := range values {
+		scanArgs[i] = &values[i]
+	}
+
+	var pageList []models.Title
+
+	for rows.Next() {
+		err = rows.Scan(scanArgs...)
+		if err != nil {
+			panic(err.Error())
+		}
+		var page models.Title
+
+		var value string
+		for i, col := range values {
+			// Here we can check if the value is nil (NULL value)
+
+
+			if col == nil {
+				value = "NULL"
+			} else {
+				value = string(col)
+			}
+
+			switch columns[i]{
+			case "page_id":
+				page.PageId,err = strconv.Atoi(value)
+			case "title":
+				page.PageTitle = value
+			}
+
+
+			//fmt.Println(columns[i], ": ", value)
+		}
+
+		pageList = append(pageList,page)
+
+		//fmt.Println("-----------------------------------")
+	}
+
+	return pageList
 
 }
