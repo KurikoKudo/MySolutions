@@ -77,6 +77,13 @@ func (c App) PageDisplay(pageId int) revel.Result {
 	return c.Render(page)
 }
 
+func (c App) Regist() revel.Result {
+
+	pageId := DBPage()
+
+	return c.Render(pageId)
+}
+
   func DBSearch(body []string,ptitle []string,tags []string, ecode string) ([]models.Page) {
     db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
     if err != nil {
@@ -116,7 +123,7 @@ func (c App) PageDisplay(pageId int) revel.Result {
 		}
 
 
-		fmt.Println(sqlsentence)
+		// fmt.Println(sqlsentence)
 
 
 
@@ -196,15 +203,15 @@ func (c App) PageDisplay(pageId int) revel.Result {
 		return list;
   }
 
-	func contains(s []models.Page, e int) int{
+	func contains(s []models.Page, e int) int {
 		i := 0
-	for _, v := range s {
-		if e == v.PageId {
-			return i
+		for _, v := range s {
+			if e == v.PageId {
+				return i
+			}
+			i += 1
 		}
-		i += 1
-	}
-	return -1
+		return -1
 }
 
 	func DBDisplay(pageId int) models.Page {
@@ -545,5 +552,51 @@ func DBTitlelist(list []int) []models.Title {
 	}
 
 	return pageList
+
+}
+
+func DBPage() int {
+
+	db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close() // 関数がリターンする直前に呼び出される
+
+	sqlsentence := "SELECT * FROM pages"
+
+	fmt.Println(sqlsentence)
+	rows, err := db.Query(sqlsentence) //
+	if err != nil {
+		panic(err.Error())
+	}
+
+	columns, err := rows.Columns() // カラム名を取得
+	if err != nil {
+		panic(err.Error())
+	}
+
+	values := make([]sql.RawBytes, len(columns))
+
+	//  rows.Scan は引数に `[]interface{}`が必要.
+
+	scanArgs := make([]interface{}, len(values))
+	for i := range values {
+		scanArgs[i] = &values[i]
+	}
+
+	pageLength := 0
+
+	for rows.Next() {
+		err = rows.Scan(scanArgs...)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		pageLength += 1
+
+	}
+
+	return pageLength+1
 
 }
