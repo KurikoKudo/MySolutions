@@ -59,8 +59,11 @@ func (c App) PageDisplay(pageId int) revel.Result {
 	start := time.Now();
 	var page models.Page
 	display := make(chan models.Page)
+	tags := make(chan []string)
 
 	go func() {
+
+		fmt.Println("display start")
 		db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
     if err != nil {
       panic(err.Error())
@@ -104,19 +107,13 @@ func (c App) PageDisplay(pageId int) revel.Result {
 			}
 
 		}
-
+		fmt.Println("display end")
 		display <- page
 
 	}()
-	page = <- display
-	end := time.Now();
-	fmt.Printf("DBDisplay")
-	fmt.Printf("%f秒\n",(end.Sub(start)).Seconds())
-
-	start = time.Now();
-	tags := make(chan []string)
 
 	go func() {
+		fmt.Println("tag start")
 		db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
 		if err != nil {
 			panic(err.Error())
@@ -139,19 +136,23 @@ func (c App) PageDisplay(pageId int) revel.Result {
 			tagList = append(tagList,tagName)
 		}
 
+		fmt.Println("tag end")
 		db.Close()
 		tags <- tagList
 
 	}()
-
+	page = <- display
+	close(display)
+	end := time.Now();
+	fmt.Printf("DBDisplay")
+	fmt.Printf("%f秒\n",(end.Sub(start)).Seconds())
 
 	page.TagName = <- tags
+	close(tags)
 	end = time.Now();
 	fmt.Printf("DBTags")
 	fmt.Printf("%f秒\n",(end.Sub(start)).Seconds())
 
-
-	start = time.Now();
 	var relations []int
 	relations = DBRelations(pageId)
 	page.Relation = relations
@@ -163,8 +164,6 @@ func (c App) PageDisplay(pageId int) revel.Result {
 	relationPage = DBTitlelist(relations)
 	page.RelationPage = relationPage
 
-
-	start = time.Now();
 	var references []models.Reference
 	references = DBReferences(pageId)
 	page.Reference = references
@@ -466,7 +465,7 @@ func DBPage() int {
 
 	sqlsentence := "SELECT * FROM pages"
 
-	fmt.Println(sqlsentence)
+	//fmt.Println(sqlsentence)
 	rows, err := db.Query(sqlsentence) //
 	if err != nil {
 		panic(err.Error())
