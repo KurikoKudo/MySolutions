@@ -19,8 +19,8 @@ type Page struct{
 	ErrorDetail string
 	Solutions		string
 	Reference		[]Reference
-	SummaryId		int
-	SummaryPage int
+	SummaryId		int64
+	SummaryPage int64
 	Importance	int
 	Complete		bool
 	TagName			[]string

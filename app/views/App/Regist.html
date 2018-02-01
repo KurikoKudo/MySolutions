@@ -5,67 +5,94 @@
   <div class="col-md-1"></div>
   <div class="col-md-10 center">
 
-    <div class="row">
-      <h1 class="text-center page">タイトル入力</h1>
+<form method="POST" action="/App/Regist">
+
+    <div class="row page">
+      <div class="col-md-1"></div>
+      <div class="col-md-10"><h3 id="ptitle-label">タイトル　※</h3>
+      <div class="form-group">
+        <input type="text" id="ptitle" name="ptitle" class="form-control"/>
+      </div>
+      <div class="col-md-1"></div>
     </div>
+</div>
 
-    <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-
-        タグ入力
-
-
+    <div class="row page">
+      <div class="col-md-1"></div>
+      <div class="col-md-10"><h3 id="tags-label">タグ（半角スペースで区切る）※</h3>
+          <div class="form-group">
+        <input type="text" id="tags" name="tags" class="form-control"/>
+      </div>
+      <div class="col-md-1"></div>
     </div>
-  </div>
-
-  <br>
-  <br>
-
-  <div class="row page">
-    <div class="col-md-1"></div>
-    <div class="col-md-10"><h3>Error Code</h3>
-
-    </div>
-    <div class="col-md-1"></div>
-  </div>
-
-  <div class="row page">
-    <div class="col-md-1"></div>
-    <div class="col-md-10"><h3>Error</h3>
-
-    </div>
-    <div class="col-md-1"></div>
   </div>
 
   <div class="row page">
     <div class="col-md-1"></div>
-    <div class="col-md-10"><h3>Details</h3>
-
+    <div class="col-md-10"><h3 id="ecode-label">Error Code</h3>
+      <input type="text" id="ecode" name="ecode" class="form-control"/>
     </div>
     <div class="col-md-1"></div>
   </div>
 
   <div class="row page">
     <div class="col-md-1"></div>
-    <div class="col-md-10"><h3>Solutions</h3>
-
-
+    <div class="col-md-10"><h3 id="eabst-label">Error</h3>
+      <input type="text" id="eabst" name="eabst" class="form-control"/>
     </div>
     <div class="col-md-1"></div>
   </div>
 
   <div class="row page">
     <div class="col-md-1"></div>
-    <div class="col-md-10"><h3>Reference</h3>
+    <div class="col-md-10"><h3 id="edetail-label">Details</h3>
+      <textarea rows="10" cols="60" id="edetail" name="edetail" class="form-control"></textarea>
+      <div class="col-md-1"></div>
+    </div>
 
+  </div>
+
+  <div class="row page">
+    <div class="col-md-1"></div>
+    <div class="col-md-10"><h3 id="solutions-label">Solutions　※</h3>
+      <textarea rows="10" cols="60" id="solutions" name="solutions" class="form-control"></textarea>
     </div>
     <div class="col-md-1"></div>
   </div>
 
   <div class="row page">
     <div class="col-md-1"></div>
-    <div class="col-md-10"><h3>Condition</h3>
+    <div class="col-md-10"><h3 id="reference-label">Reference</h3>
+      <div class="form-group col-md-12">
+        <div class="col-md-4">名前<input type="text" id="ltitle1" name="ltitle1" class="form-control"></div>
+        <div class="col-md-8">URL貼り付け<input type="text" id="link1" name="link1" class="form-control w-100"></div>
+      </div>
+      <div class="form-group col-md-12">
+        <div class="col-md-4">名前<input type="text" id="ltitle2" name="ltitle2" class="form-control"></div>
+        <div class="col-md-8">URL貼り付け<input type="text" id="link2" name="link2" class="form-control w-100"></div>
+      </div>
+      <div class="form-group col-md-12">
+        <div class="col-md-4">名前<input type="text" id="ltitle3" name="ltitle3" class="form-control"></div>
+        <div class="col-md-8">URL貼り付け<input type="text" id="link3" name="link3" class="form-control w-100"></div>
+      </div>
+      <div class="form-group col-md-12">
+        <div class="col-md-4">名前<input type="text" id="ltitle4" name="ltitle4" class="form-control"></div>
+        <div class="col-md-8">URL貼り付け<input type="text" id="link4" name="link4" class="form-control w-100"></div>
+      </div>
+      <div class="form-group col-md-12">
+        <div class="col-md-4">名前<input type="text" id="ltitle5" name="ltitle5" class="form-control"></div>
+        <div class="col-md-8">URL貼り付け<input type="text" id="link5" name="link5" class="form-control w-100"></div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
 
+  <div class="row page">
+    <div class="col-md-1"></div>
+    <div class="col-md-10"><h3>Condition　※</h3>
+
+      <input type="radio" id="" name="condition" value="true">完結<br>
+      <input type="radio" id="" name="condition" value="false">要追記
 
     </div>
     <div class="col-md-1"></div>
@@ -80,7 +107,7 @@
   </div>
 
 
-
+</form>
   </div>
   <div class="col-md-1"></div>
 </div>
