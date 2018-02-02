@@ -176,11 +176,240 @@ func (c App) PageDisplay(pageId int) revel.Result {
 
 func (c App) Regist() revel.Result {
 
-	pageId := DBPage()
-
-	return c.Render(pageId)
+	//fmt.Println("hoge")
+	return c.Render()
 }
 
+func (c App) Insert() revel.Result {
+
+	//var ptitle,ecode,eabst,edatail,solutions string
+
+	var tags []string
+	var relList []int
+	var refList []models.Reference
+
+		ptitle := c.Params.Form.Get("ptitle")
+		ecode := c.Params.Form.Get("ecode")
+		eabst := c.Params.Form.Get("eabst")
+		edetail := c.Params.Form.Get("edetail")
+		solutions := c.Params.Form.Get("solutions")
+		tags = strings.Split((c.Params.Form.Get("tags")), " ")
+		importance,err := strconv.Atoi(c.Params.Form.Get("importance"))
+		if err != nil {
+			panic(err.Error())
+		}
+
+		for i:=1; i <= 5; i++{
+			var ref models.Reference
+			getT := "ltitle" + strconv.Itoa(i)
+			getL := "link" + strconv.Itoa(i)
+			if(c.Params.Form.Get(getT) != ""){
+				ref.LinkTitle = c.Params.Form.Get(getT)
+				ref.Link = c.Params.Form.Get(getL)
+				refList = append(refList,ref)
+			}
+		}
+		condition := c.Params.Form.Get("condition")
+
+
+
+	for j:=1; j<=5; j++{
+		getR := "relation"+strconv.Itoa(j)
+		if(c.Params.Form.Get(getR) != ""){
+			str := strings.Split((c.Params.Form.Get(getR)), "=")
+			fmt.Println(str[0])
+			fmt.Println(str[1])
+			num,err := strconv.Atoi(str[1])
+			if err != nil {
+				panic(err.Error())
+			}
+			relList = append(relList,num)
+		}
+	}
+
+	page := make(chan int)
+	go func () {
+
+		db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
+		if err != nil {
+			panic(err.Error())
+		}
+
+
+		sqlsentence := "SELECT * FROM pages"
+
+		//fmt.Println(sqlsentence)
+		rows, err := db.Query(sqlsentence) //
+		if err != nil {
+			panic(err.Error())
+		}
+
+		columns, err := rows.Columns() // カラム名を取得
+		if err != nil {
+			panic(err.Error())
+		}
+
+		values := make([]sql.RawBytes, len(columns))
+
+		//  rows.Scan は引数に `[]interface{}`が必要.
+
+		scanArgs := make([]interface{}, len(values))
+		for i := range values {
+			scanArgs[i] = &values[i]
+		}
+
+		pageLength := 0
+
+		for rows.Next() {
+			err = rows.Scan(scanArgs...)
+			if err != nil {
+				panic(err.Error())
+			}
+
+			pageLength += 1
+
+		}
+		db.Close()
+
+		page <- pageLength+1
+
+	}()
+
+	pageId := <- page
+
+
+	/*tag := make(chan string[])
+	ref := make(chan string[])
+	ref := make(chan string[])*/
+	go func(){
+		db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
+    if err != nil {
+      panic(err.Error())
+    }
+    defer db.Close()
+
+			sqlsentence := "INSERT INTO pages (page_id,title,body,complete,importance"
+			if(ecode != ""){
+				sqlsentence += ",error_code)"
+			} else {
+				sqlsentence += ")"
+			}
+			sqlsentence += "VALUES("+strconv.Itoa(pageId)+",'"+ptitle+"','"+eabst+edetail+solutions+"',"+condition+","+strconv.Itoa(importance)
+			if(ecode != ""){
+				sqlsentence += ",'"+ecode+"')"
+			} else {
+				sqlsentence += ")"
+			}
+			fmt.Println("page",sqlsentence)
+			_, err = db.Exec(sqlsentence)
+			if err != nil {
+    		panic(err.Error())
+			}
+
+	}()
+
+	go func(){
+		db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
+    if err != nil {
+      panic(err.Error())
+    }
+    defer db.Close()
+
+			sqlsentence := "INSERT INTO body (page_id,solutions"
+
+			if(eabst != ""){
+				sqlsentence += ",error_abst"
+				if(edetail != ""){
+					sqlsentence += ",error_detail)"
+				} else {
+					sqlsentence += ")"
+				}
+			} else {
+				if(edetail != ""){
+					sqlsentence += ",error_detail)"
+				} else {
+					sqlsentence += ")"
+				}
+			}
+
+			sqlsentence += "VALUES("+strconv.Itoa(pageId)+",'"+solutions+"'"
+
+			if(eabst != ""){
+				sqlsentence += ",'"+eabst+"'"
+				if(edetail != ""){
+					sqlsentence += ",'"+edetail+"')"
+				} else {
+					sqlsentence += ")"
+				}
+			} else {
+				if(edetail != ""){
+					sqlsentence += ",'"+edetail+"')"
+				} else {
+					sqlsentence += ")"
+				}
+			}
+			fmt.Println("body",sqlsentence)
+			_, err = db.Exec(sqlsentence)
+			if err != nil {
+    		panic(err.Error())
+			}
+
+	}()
+
+	go func(){
+		db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
+    if err != nil {
+      panic(err.Error())
+    }
+    defer db.Close()
+
+		if(tags[0] != ""){
+			sqlsentence := "INSERT INTO tags (page_id,tag_name) VALUES"
+
+			for i:=0; i < len(tags); i++ {
+				if(i==0){
+					sqlsentence += " (" + strconv.Itoa(pageId) + ",'" + tags[i] + "')"
+				}else{
+					sqlsentence += " ,(" + strconv.Itoa(pageId) + ",'" + tags[i] + "')"
+				}
+			}
+			fmt.Println("tag",sqlsentence)
+			_, err = db.Exec(sqlsentence)
+			if err != nil {
+    		panic(err.Error())
+			}
+		}
+	}()
+
+	func(){
+		db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
+    if err != nil {
+      panic(err.Error())
+    }
+    defer db.Close()
+
+		if(refList[0].LinkTitle != ""){
+
+			sqlsentence := "INSERT INTO reference (page_id,link_title,link) VALUES"
+
+			for i:=0; i < len(refList); i++ {
+				if(i==0){
+					sqlsentence += " (" + strconv.Itoa(pageId) + ",'" + refList[i].LinkTitle + "','" + refList[i].Link + "')"
+				}else{
+					sqlsentence += " ,(" + strconv.Itoa(pageId) + ",'" + refList[i].LinkTitle + "','" + refList[i].Link + "')"
+				}
+			}
+			fmt.Println("ref",sqlsentence)
+			_, err = db.Exec(sqlsentence)
+			if err != nil {
+    		panic(err.Error())
+			}
+		}
+	}()
+
+	return c.Render(ptitle,ecode,eabst,edetail,solutions,condition,tags,refList,relList)
+
+}
   func DBSearch(body []string,ptitle []string,tags []string, ecode string) ([]models.Page) {
     db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
     if err != nil {
@@ -452,51 +681,5 @@ func DBTitlelist(list []int) []models.Title {
 	}
 	db.Close()
 	return pageList
-
-}
-
-func DBPage() int {
-
-	db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
-	if err != nil {
-		panic(err.Error())
-	}
-
-
-	sqlsentence := "SELECT * FROM pages"
-
-	//fmt.Println(sqlsentence)
-	rows, err := db.Query(sqlsentence) //
-	if err != nil {
-		panic(err.Error())
-	}
-
-	columns, err := rows.Columns() // カラム名を取得
-	if err != nil {
-		panic(err.Error())
-	}
-
-	values := make([]sql.RawBytes, len(columns))
-
-	//  rows.Scan は引数に `[]interface{}`が必要.
-
-	scanArgs := make([]interface{}, len(values))
-	for i := range values {
-		scanArgs[i] = &values[i]
-	}
-
-	pageLength := 0
-
-	for rows.Next() {
-		err = rows.Scan(scanArgs...)
-		if err != nil {
-			panic(err.Error())
-		}
-
-		pageLength += 1
-
-	}
-	db.Close()
-	return pageLength+1
 
 }
