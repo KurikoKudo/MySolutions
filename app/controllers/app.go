@@ -407,7 +407,7 @@ func (c App) Insert() revel.Result {
 		}
 	}()
 
-	return c.Render(ptitle,ecode,eabst,edetail,solutions,condition,tags,refList,relList)
+	return c.Render(ptitle,pageId)
 
 }
   func DBSearch(body []string,ptitle []string,tags []string, ecode string) ([]models.Page) {
