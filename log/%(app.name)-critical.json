@@ -1,0 +1,1 @@
+{"caller":"logger.go:139","lvl":"crit","module":"revel","msg":"NewRoute: Failed to find controller for route path action /?App.Index \nmap[string]*revel.ActionPathData{}\n","section":"router","t":"2018-02-05T20:13:57.371261+09:00"}

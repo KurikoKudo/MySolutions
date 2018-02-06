@@ -1,14 +1,14 @@
 package controllers
 
 import (
-	"github.com/revel/revel"
-	"strings"
-	"strconv"
-	"fmt"
-	"database/sql"
-	 "time"
-	  _ "github.com/go-sql-driver/mysql"
-	 "MySolutions/app/models"
+		"github.com/revel/revel"
+	  "strings"
+	  "strconv"
+	  "fmt"
+	  "database/sql"
+	  "time"
+	_ "github.com/go-sql-driver/mysql"
+	  "MySolutions/app/models"
  )
 
 type App struct {
@@ -28,25 +28,15 @@ func (c App) Home() revel.Result {
 /*POST*/
 func (c App) Search() revel.Result {
 
-	var body []string
-	var ptitle []string
-	var tags []string
-	var ecode string = ""
+	ecode := c.Params.Form.Get("ecode")
 
+	body := strings.Split((c.Params.Form.Get("body")), " ")
 
-	if(c.Params.Form.Get("ecode") != ""){
-		ecode = c.Params.Form.Get("ecode")
-	}
+	ptitle := strings.Split((c.Params.Form.Get("ptitle")), " ")
 
+	tags := strings.Split((c.Params.Form.Get("tags")), " ")
 
-	body = strings.Split((c.Params.Form.Get("body")), " ")
-
-	ptitle = strings.Split((c.Params.Form.Get("ptitle")), " ")
-
-	tags = strings.Split((c.Params.Form.Get("tags")), " ")
-
-	var list []models.Page
-	list = DBSearch(body,ptitle,tags,ecode)
+	list := DBSearch(body,ptitle,tags,ecode)
 
 	listlen := len(list)
 	//fmt.Println("長さ：",listlen)
@@ -410,71 +400,7 @@ func (c App) Insert() revel.Result {
 	return c.Render(ptitle,pageId)
 
 }
-  func DBSearch(body []string,ptitle []string,tags []string, ecode string) ([]models.Page) {
-    db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
-    if err != nil {
-      panic(err.Error())
-    }
-    defer db.Close() // 関数がリターンする直前に呼び出される
 
-
-		sqlsentence := "SELECT pages.page_id,pages.title,pages.error_code,pages.body,pages.importance,tags.tag_name,tags.page_id FROM pages INNER JOIN tags ON pages.page_id = tags.page_id WHERE 1"
-		if(0 < len(body)){
-			bodysentence := ""
-			for i:=0; i < len(body); i++{
-				bodysentence += " AND pages.body LIKE '%" + body[i] + "%'"
-			}
-			sqlsentence += bodysentence
-		}
-
-		if(0 < len(ptitle)){
-			ptitlesentence := ""
-			for i:=0; i<len(ptitle); i++{
-				ptitlesentence += " AND pages.title LIKE '%" + ptitle[i] + "%'"
-			}
-			sqlsentence += ptitlesentence
-		}
-
-		if(0 < len(tags)){
-			tagssentence := ""
-			for i:=0; i<len(tags); i++{
-				tagssentence += " AND tags.tag_name LIKE '%" + tags[i] + "%'"
-			}
-			sqlsentence += tagssentence
-		}
-
-		if(ecode != ""){
-			ecodesentence := " AND pages.error_code '%" + ecode + "%'"
-			sqlsentence += ecodesentence
-		}
-
-    rows, err := db.Query(sqlsentence) //
-    if err != nil {
-      panic(err.Error())
-    }
-
-		//sliceの初期化
-		var list []models.Page
-
-    for rows.Next() {
-			var pages models.Page
-			var tmpString sql.NullString
-			var tmpInt sql.NullInt64
-      err = rows.Scan(&pages.PageId,&pages.PageTitle,&tmpString,&tmpString,&tmpInt,&tmpString,&tmpInt)
-      if err != nil {
-        panic(err.Error())
-      }
-
-			if (contains(list,pages.PageId) >= 0){ //タグが２つ以上マッチ
-				// list[contains(list,pages.PageId)].TagName = append(list[contains(list,pages.PageId)].TagName,pages.TagName[0])
-			} else {
-				list = append(list, pages)
-			}
-
-    }
-
-		return list;
-  }
 
 	func contains(s []models.Page, e int) int {
 		i := 0
