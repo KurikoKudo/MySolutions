@@ -1,23 +1,31 @@
 package controllers
 
 import (
-  //  "github.com/revel/revel"
-	//  "strings"
-	//   "strconv"
-	//   "fmt"
-	 "database/sql"
-	//   "time"
-	//   "github.com/go-sql-driver/mysql"
-	 "MySolutions/app/models"
- )
+  "github.com/jinzhu/gorm"
+  _ "github.com/jinzhu/gorm/dialects/mysql"
+)
 
+func gormConnect() *gorm.DB {
+  DBMS     = "mysql"
+  USER     = "mysolutions"
+  PASS     = "MySystem2017!"
+  PROTOCOL = "tcp(localhost:3306)"
+  DBNAME   = "mysolutions"
 
+  CONNECT = USER+":"+PASS+"@"+PROTOCOL+"/"+DBNAME
+  db,err := gorm.Open(DBMS, CONNECT)
 
-func DBSearch(body []string,ptitle []string,tags []string, ecode string) ([]models.Page) {
-  db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
   if err != nil {
     panic(err.Error())
   }
+  return db
+}
+
+
+func DBSearch(body []string,ptitle []string,tags []string, ecode string) ([]models.Page) {
+
+  // DB接続
+  db := gormConnect()
   defer db.Close()
 
   // sql文先頭
