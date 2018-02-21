@@ -9,7 +9,7 @@ module:testrunner
 
 GET     /                                       App.Index
 GET     /home                                   App.Home
-# GET     /regist                                 App.Regist
+POST    /Regist                             Page.Regist
 # POST    /App/Search                             App.Search
 # POST    /App/Insert                             App.Insert
 # GET     /App/PageDisplay                        App.PageDisplay
