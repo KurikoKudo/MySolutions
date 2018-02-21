@@ -1,15 +1,9 @@
 package controllers
 
 import (
-		"github.com/revel/revel"
-	  "strings"
-	  "strconv"
-	  "fmt"
-	  "database/sql"
-	  "time"
 	_ "github.com/go-sql-driver/mysql"
-	  "MySolutions/app/models"
- )
+	"github.com/revel/revel"
+)
 
 type App struct {
 	*revel.Controller
@@ -17,15 +11,19 @@ type App struct {
 
 func (c App) Index() revel.Result {
 	text := "It Works!"
+	//Migration()
+	//fmt.Println("Index")
 	return c.Render(text)
 }
 
 func (c App) Home() revel.Result {
 	text := "- welcome to YourSolutions -"
 	return c.Render(text)
+
 }
 
 /*POST*/
+/*
 func (c App) Search() revel.Result {
 
 	ecode := c.Params.Form.Get("ecode")
@@ -267,10 +265,13 @@ func (c App) Insert() revel.Result {
 
 	pageId := <- page
 
+*/
 
-	/*tag := make(chan string[])
-	ref := make(chan string[])
-	ref := make(chan string[])*/
+/*tag := make(chan string[])
+ref := make(chan string[])
+ref := make(chan string[])*/
+
+/*
 	go func(){
 		db, err := sql.Open("mysql", "mysolutions:MySystem2017!@tcp(localhost:3306)/mysolutions")
     if err != nil {
@@ -609,3 +610,4 @@ func DBTitlelist(list []int) []models.Title {
 	return pageList
 
 }
+*/
