@@ -3,13 +3,14 @@
 # This file defines all application routes (Higher priority routes first)
 #
 
-module:testrunner
+ module:testrunner
 # module:jobs
 
 
 GET     /                                       App.Index
 GET     /home                                   App.Home
-POST    /Regist                             Page.Regist
+POST    /App/RegistPage                            App.RegistPage
+GET    /App/RegistForm                            App.RegistForm
 # POST    /App/Search                             App.Search
 # POST    /App/Insert                             App.Insert
 # GET     /App/PageDisplay                        App.PageDisplay

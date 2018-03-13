@@ -1,6 +1,10 @@
 package controllers
 
 import (
+	"MySolutions/app/daos"
+	"strconv"
+	"strings"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/revel/revel"
 )
@@ -11,7 +15,7 @@ type App struct {
 
 func (c App) Index() revel.Result {
 	text := "It Works!"
-	//Migration()
+	daos.Migration()
 	//fmt.Println("Index")
 	return c.Render(text)
 }
@@ -22,26 +26,32 @@ func (c App) Home() revel.Result {
 
 }
 
-/*POST*/
-/*
 func (c App) Search() revel.Result {
-
-	ecode := c.Params.Form.Get("ecode")
-
-	body := strings.Split((c.Params.Form.Get("body")), " ")
 
 	ptitle := strings.Split((c.Params.Form.Get("ptitle")), " ")
 
 	tags := strings.Split((c.Params.Form.Get("tags")), " ")
 
-	list := DBSearch(body,ptitle,tags,ecode)
+	evaluationInput, err := strconv.ParseUint(c.Params.Form.Get("evaluation"), 10, 0)
+	if err != nil {
+		panic(err.Error())
+	}
+	evaluation := uint(evaluationInput)
+
+	condition, err := strconv.ParseBool(c.Params.Form.Get("condition"))
+	if err != nil {
+		panic(err.Error())
+	}
+
+	list := SearchController(ptitle, tags, evaluation, condition)
 
 	listlen := len(list)
 	//fmt.Println("長さ：",listlen)
 
-	return c.Render(list,listlen)
+	return c.Render(list, listlen)
 }
 
+/*
 func (c App) PageDisplay(pageId int) revel.Result {
 
 	start := time.Now();

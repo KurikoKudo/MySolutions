@@ -1,0 +1,86 @@
+{{set . "title" "MySolutions"}}
+{{template "header.html" .}}
+
+<div class="container">
+  <div class="col-md-1"></div>
+  <div class="col-md-10 center">
+
+<form method="POST" action="/App/RegistPage">
+
+    <div class="row page">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <h1 class="center-inline">新規ページ作成</h1>
+        <h3 id="ptitle-label">タイトル</h3>
+      <div class="form-group">
+        <input type="text" id="ptitle" name="ptitle" class="form-control"/>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+</div>
+
+    <div class="row page">
+      <div class="col-md-1"></div>
+      <div class="col-md-10"><h3 id="tags-label">タグ（半角スペースで区切る）</h3>
+          <div class="form-group">
+        <input type="text" id="tags" name="tags" class="form-control"/>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
+
+
+  <div class="row page">
+    <div class="col-md-1"></div>
+    <div class="col-md-10"><h3 id="solutions-label">Solutions(mdで記述)</h3>
+      <textarea rows="10" cols="60" id="solutions" name="solutions" data-provide="markdown"></textarea>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+  <div class="row page">
+    <div class="col-md-1"></div>
+    <div class="col-md-10"><h3 id="condition-label">Condition & Evaluation</h3>
+
+      <div class=" col-md-6">
+      <input type="radio" id="" name="condition" value="true">完結
+      <input type="radio" id="" name="condition" value="false">要追記
+      <br><br>
+      <input type="radio" id="" name="evaluation" value="1">☆1
+      <input type="radio" id="" name="evaluation" value="2">☆2
+      <input type="radio" id="" name="evaluation" value="3">☆3
+      <input type="radio" id="" name="evaluation" value="4">☆4
+      <input type="radio" id="" name="evaluation" value="5">☆5
+    </div>
+
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+  <br><br>
+
+  <div class="row">
+    <div class="col-md-2 col-md-offset-5">
+      <input type="submit" id="search-btn" class="btn search-btn center-block" value="登録">
+    </div>
+  </div>
+
+
+</form>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</div>
+<script src="/public/js/bootstrap-markdown.js"></script>
+<script src="/public/css/bootstrap-markdown.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+
+{{template "footer.html" .}}
