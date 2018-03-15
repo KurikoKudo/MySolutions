@@ -26,21 +26,37 @@ func (c App) Home() revel.Result {
 
 }
 
+func (c App) RegistForm() revel.Result {
+	/*将来的にユーザが複数いる場合ここでユーザ情報の保持とかする?*/
+	return c.Render()
+
+}
+
 func (c App) Search() revel.Result {
 
-	ptitle := strings.Split((c.Params.Form.Get("ptitle")), " ")
+	if c.Params.Form.Get("ptitle") != "" {
+		ptitle = strings.Split((c.Params.Form.Get("ptitle")), " ")
+	} else {
 
-	tags := strings.Split((c.Params.Form.Get("tags")), " ")
-
-	evaluationInput, err := strconv.ParseUint(c.Params.Form.Get("evaluation"), 10, 0)
-	if err != nil {
-		panic(err.Error())
 	}
-	evaluation := uint(evaluationInput)
 
-	condition, err := strconv.ParseBool(c.Params.Form.Get("condition"))
-	if err != nil {
-		panic(err.Error())
+	if c.Params.Form.Get("tags") != "" {
+		tags = strings.Split((c.Params.Form.Get("tags")), " ")
+	}
+
+	if c.Params.Form.Get("evaluation") != "" {
+		evaluationInput, err := strconv.ParseUint(c.Params.Form.Get("evaluation"), 10, 0)
+		if err != nil {
+			return err
+		}
+		evaluation = uint(evaluationInput)
+	}
+
+	if c.Params.Form.Get("ptitle") != "" {
+		condition, err := strconv.ParseBool(c.Params.Form.Get("condition"))
+		if err != nil {
+			return err
+		}
 	}
 
 	list := SearchController(ptitle, tags, evaluation, condition)

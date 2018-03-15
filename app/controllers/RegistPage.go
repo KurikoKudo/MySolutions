@@ -11,16 +11,11 @@ import (
 	"github.com/revel/revel"
 )
 
-func (c App) RegistForm() revel.Result {
-	/*将来的にユーザが複数いる場合ここでユーザ情報の保持とかする?*/
-	return c.Render()
-
-}
-
 func (c App) RegistPage() revel.Result {
 	var newPage models.Page_Body
 
-	/*c.Validation.Required(c.Params.Form.Get("ptitle")).Message("タイトルを入力してください")
+	c.Validation.Required(c.Params.Form.Get("ptitle")).Message("タイトルを入力してください")
+	c.Validation.Required(c.Params.Form.Get("solutions")).Message("タイトルを入力してください")
 	c.Validation.Required(c.Params.Form.Get("tags")).Message("タグを１つ以上入力してください")
 	c.Validation.Required(c.Params.Form.Get("condition")).Message("conditionを入力してください")
 	c.Validation.Required(c.Params.Form.Get("evaluation")).Message("evaluationを入力してください")
@@ -29,25 +24,33 @@ func (c App) RegistPage() revel.Result {
 		c.Validation.Keep()
 		c.FlashParams()
 		return c.Redirect(App.RegistForm)
-	}*/
+	}
 
+	newPage.Page_Body = c.Params.Form.Get("solutions")
 	newPage.Page_Title = c.Params.Form.Get("ptitle")
-	tagList := strings.Split((c.Params.Form.Get("tags")), " ")
+	tagList := strings.Split((c.Params.Form.Get("tags")), ",")
+	for i, v := range tagList {
+		tagList[i] = " " + v + "\n"
+	}
 	evaluation, err := strconv.ParseUint(c.Params.Form.Get("evaluation"), 10, 0)
 	if err != nil {
-		panic(err.Error())
+		return error
+	}
+	if 1 <= evaluation && evaluation <= 5 {
+		fmt.Println("evaluationの入力が不正です")
+		return error
 	}
 	condition, err := strconv.ParseBool(c.Params.Form.Get("condition"))
 	if err != nil {
-		panic(err.Error())
+		return error
 	}
 	newPage.Evaluation = uint(evaluation)
 	newPage.Condition = condition
+	newPage.Tag = tagList
 
-	fmt.Println(newPage, tagList)
+	fmt.Println(newPage)
 
 	registedPageId := daos.RegisterNewPage(newPage)
-	daos.RegisterNewTags(registedPageId, tagList)
 
 	return c.Render(registedPageId)
 

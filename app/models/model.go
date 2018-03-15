@@ -6,21 +6,16 @@ import (
 
 type Page_Display struct { //not DB
 	Page_Body     Page_Body
-	Tag           []Tag
 	Page_Relation []Page_Relation
 }
 
 type Page_Body struct {
-	Page_Id    uint   `gorm:"primary_key"`
-	Page_Title string `gorm:"not null;unique"`
-	Page_Body  string `gorm:"not null"`
-	Evaluation uint   `gorm:"not null"`
-	Condition  bool   `gorm:"not null"`
-}
-
-type Tag struct {
-	Page_Id  uint   `gorm:"not null"`
-	Tag_Name string `gorm:"not null"`
+	Page_Id    uint     `gorm:"primary_key"`
+	Page_Title string   `gorm:"not null;unique"`
+	Page_Body  string   `gorm:"not null"`
+	Evaluation uint     `gorm:"not null"`
+	Condition  bool     `gorm:"not null"`
+	Tag        []string `gorm:"not null"`
 }
 
 type Page_Relation struct {
@@ -40,7 +35,7 @@ type Summary_Page struct {
 	Page_Number uint `gorm:"not null"`
 }
 
-type Summary_Display struct {
+type Summary_Display struct { //not DB
 	Summary_Body Summary_Body
 	Summary_Page []Summary_Page
 }

@@ -11,7 +11,7 @@ GET     /                                       App.Index
 GET     /home                                   App.Home
 POST    /App/RegistPage                            App.RegistPage
 GET    /App/RegistForm                            App.RegistForm
-# POST    /App/Search                             App.Search
+GET    /App/SearchResult                       App.SearchResult
 # POST    /App/Insert                             App.Insert
 # GET     /App/PageDisplay                        App.PageDisplay
 
