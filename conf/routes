@@ -12,8 +12,7 @@ GET     /home                                   App.Home
 POST    /App/RegistPage                            App.RegistPage
 GET    /App/RegistForm                            App.RegistForm
 POST    /App/SearchManager                       App.SearchManager
-# POST    /App/Insert                             App.Insert
-# GET     /App/PageDisplay                        App.PageDisplay
+GET     /App/PageDisplay                        App.PageDisplay
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -34,7 +34,7 @@ func (c App) SearchManager(ptitle []string, tags []string, evaluation uint, cond
 	conditionInputStr := c.Params.Form.Get("condition")
 
 	searchedPageList := daos.SearchPageDAO(conditionInputStr, searchingEvaluation, searchingTags, searchingTitles)
-
-	return c.Render(searchedPageList)
+	listlen := len(searchedPageList)
+	return c.Render(searchedPageList, listlen)
 
 }

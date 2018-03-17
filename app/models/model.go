@@ -5,17 +5,19 @@ import (
 )
 
 type Page_Display struct { //not DB
-	Page_Body     Page_Body
-	Page_Relation []Page_Relation
+	Page_Body           Page_Body
+	Page_Relations      []Page_Relation
+	Page_Relation_Links []Page_Body
+	Tag_List            []string
 }
 
 type Page_Body struct {
-	Page_Id    uint   `gorm:"primary_key"`
-	Page_Title string `gorm:"not null;unique"`
-	Page_Body  string `gorm:"type:text;not null"`
-	Evaluation uint   `gorm:"not null"`
-	Condition  bool   `gorm:"not null"`
-	Tags       string `gorm:"type:text;not null"`
+	Page_Id        uint   `gorm:"primary_key"`
+	Page_Title     string `gorm:"not null;unique"`
+	Page_Body      string `gorm:"type:text;not null"`
+	Evaluation     uint   `gorm:"not null"`
+	Page_Condition bool   `gorm:"not null"`
+	Tags           string `gorm:"type:text;not null"`
 }
 
 type Page_Relation struct {

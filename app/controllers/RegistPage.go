@@ -47,7 +47,7 @@ func (c App) RegistPage() revel.Result {
 		return c.Redirect(App.RegistForm)
 	}
 	newPage.Evaluation = uint(evaluation)
-	newPage.Condition = condition
+	newPage.Page_Condition = condition
 	newPage.Tags = tagsStr
 
 	fmt.Println(newPage)
