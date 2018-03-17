@@ -12,7 +12,7 @@
         <div class="search col-md-12">
           <h3 class="text-center">Please Enter Your Problem...</h3>
           <div class="col-md-12">
-            <form method="POST" action="/App/Search">
+            <form method="POST" action="/App/SearchManager">
 
               <div class="row form-group">
               <span><label for="ptitle" id="ptitle-label" class="text-danger col-md-2 text-center"><i class="fa fa-list fa-fw" aria-hidden="true"></i>page title</label>
@@ -21,6 +21,16 @@
 
               <div class="row form-group">
               <span><label for="tags" id="tags-label" class="text-danger col-md-2 text-center"><i class="fa fa-tag fa-fw" ></i>tags</label>
+              <div class="col-md-10 w-100"><input type="text" name="tags" id="tags" class="form-control" placeholder="tags"></div></span>
+              </div>
+
+              <div class="row form-group">
+              <span><label for="tags" id="tags-label" class="text-danger col-md-2 text-center"><i class="fas fa-star fa-fw" ></i>tags</label>
+              <div class="col-md-10 w-100"><input type="number" name="tags" id="tags" class="form-control" placeholder="tags"></div></span>
+              </div>
+
+              <div class="row form-group">
+              <span><label for="tags" id="tags-label" class="text-danger col-md-2 text-center"><i class="fas fa-clipboard-check fa-fw" ></i>tags</label>
               <div class="col-md-10 w-100"><input type="text" name="tags" id="tags" class="form-control" placeholder="tags"></div></span>
               </div>
 

@@ -1,6 +1,8 @@
 package daos
 
 import (
+	"MySolutions/app/models"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -22,14 +24,15 @@ func gormConnect() *gorm.DB {
 }
 
 func Migration() {
-	/*
-		db := gormConnect()
 
-		db.CreateTable(&models.Page_Body{})
-		db.CreateTable(&models.Tag{})
-		db.CreateTable(&models.Page_Relation{})
-		db.CreateTable(&models.Summary_Body{})
-		db.CreateTable(&models.Summary_Page{})
+	db := gormConnect()
+
+	db.DropTable(&models.Page_Body{})
+
+	db.CreateTable(&models.Page_Body{})
+	/*db.CreateTable(&models.Page_Relation{})
+	db.CreateTable(&models.Summary_Body{})
+	db.CreateTable(&models.Summary_Page{})
 	*/
 }
 

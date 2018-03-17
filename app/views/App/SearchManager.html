@@ -10,7 +10,7 @@
         <div class="search col-md-12">
           <h3 class="text-center">Please Enter Your Problem...</h3>
           <div class="col-md-12">
-            <form method="POST" action="/App/Search">
+            <form method="POST" action="/App/SearchManager">
 
             <div class="row form-group">
             <span><label for="ptitle" id="ptitle-label" class="text-danger col-md-2 text-center"><i class="fa fa-list fa-fw" aria-hidden="true"></i>page title</label>
@@ -53,9 +53,9 @@
 
         <div class="search-result col-md-10 col-md-offset-1">
           <ul>
-           {{range .list}}
+           {{range .searchedPageList}}
            <li>
-           <a href="/App/PageDisplay?pageId={{.PageId}}">{{ .PageTitle}}</a>
+           <a href="/App/PageDisplay?pageId={{.Page_Id}}">{{ .Page_Title}}</a>
 
           </li>
 

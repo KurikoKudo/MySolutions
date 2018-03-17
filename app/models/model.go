@@ -10,12 +10,12 @@ type Page_Display struct { //not DB
 }
 
 type Page_Body struct {
-	Page_Id    uint     `gorm:"primary_key"`
-	Page_Title string   `gorm:"not null;unique"`
-	Page_Body  string   `gorm:"not null"`
-	Evaluation uint     `gorm:"not null"`
-	Condition  bool     `gorm:"not null"`
-	Tag        []string `gorm:"not null"`
+	Page_Id    uint   `gorm:"primary_key"`
+	Page_Title string `gorm:"not null;unique"`
+	Page_Body  string `gorm:"type:text;not null"`
+	Evaluation uint   `gorm:"not null"`
+	Condition  bool   `gorm:"not null"`
+	Tags       string `gorm:"type:text;not null"`
 }
 
 type Page_Relation struct {
