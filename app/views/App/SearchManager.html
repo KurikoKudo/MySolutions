@@ -4,10 +4,8 @@
 <div class="container">
   <div class="col-md-1"></div>
   <div class="col-md-10 center">
-    <div class="row">
-      <h1 class="text-center">{{ .text }}</h1>
-      <p></p>
 
+    <div class="row">
       <div class="col-md-12">
         <div class="search col-md-12">
           <h3 class="text-center">Please Enter Your Problem...</h3>
@@ -52,13 +50,33 @@
 
 
 
-
           </div>
         </div>
       </div>
-
-
     </div>
+
+    <div class="row">
+        <div class="search-result col-md-10 col-md-offset-1">
+          <h3>Results
+          <span class="pull-right">{{.listlen}} matched</span></h3>
+        </div>
+
+        <div class="search-result col-md-10 col-md-offset-1">
+          <ul>
+           {{range .searchedPageList}}
+           <li>
+           <a href="/App/PageDisplay?pageId={{.Page_Id}}">{{ .Page_Title}}</a>
+
+          </li>
+
+           {{ end }}
+           <ul>
+        </div>
+    </div>
+
+
+
+
   </div>
   <div class="col-md-1"></div>
 </div>

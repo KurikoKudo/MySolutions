@@ -1,17 +1,19 @@
 {{set . "title" "MySolutions"}}
 {{template "header.html" .}}
+<script src="http://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
 
 <div class="container">
+  <div class="col-md-1"></div>
   <div class="col-md-10 center">
 
     <div class="row">
-      <h1 class="text-center page">{{ .page.PageTitle }}</h1>
+      <h1 class="text-center page">{{ .page.Page_Body.Page_Title }}</h1>
     </div>
 
     <div class="row">
     <div class="col-md-10 col-md-offset-1">
-      <form method="POST" action="/App/Search">
-        {{range .page.TagName}}
+      <form method="POST" action="/App/SearchManager">
+        {{range .page.Tag_List}}
         <input type="hidden" name="tags" value="{{.}}" >
         <input type="submit" class="btn tag-btn" value="{{.}}">
         &nbsp;&nbsp;
@@ -23,63 +25,27 @@
   <br>
   <br>
 
+
   <div class="row page">
     <div class="col-md-1"></div>
-    <div class="col-md-10"><h3>Error Code</h3>
+    <div class="col-md-10">
 
-      {{.page.ErrorCode}}
+      <script type="text/javascript">
+        var formatted = marked({{.page.Page_Body.Page_Body}})
+        document.write("hello")
+        document.write(formatted)
+      </script>
 
     </div>
     <div class="col-md-1"></div>
   </div>
 
-  <div class="row page">
-    <div class="col-md-1"></div>
-    <div class="col-md-10"><h3>Error</h3>
-
-      {{.page.ErrorAbst}}
-
-    </div>
-    <div class="col-md-1"></div>
-  </div>
-
-  <div class="row page">
-    <div class="col-md-1"></div>
-    <div class="col-md-10"><h3>Details</h3>
-
-      {{.page.ErrorDetail}}
-
-    </div>
-    <div class="col-md-1"></div>
-  </div>
-
-  <div class="row page">
-    <div class="col-md-1"></div>
-    <div class="col-md-10"><h3>Solutions</h3>
-
-      {{.page.Solutions}}
-
-    </div>
-    <div class="col-md-1"></div>
-  </div>
-
-  <div class="row page">
-    <div class="col-md-1"></div>
-    <div class="col-md-10"><h3>Reference</h3>
-
-      {{range .page.Reference}}
-      <a href="{{.Link}}">{{.LinkTitle}}</a>
-      {{end}}
-
-    </div>
-    <div class="col-md-1"></div>
-  </div>
 
   <div class="row page">
     <div class="col-md-1"></div>
     <div class="col-md-10"><h3>Condition</h3>
 
-      {{.page.Complete}}
+      <script>{{.page.Page_Body.Page_Condition}}</script>
 
     </div>
     <div class="col-md-1"></div>
@@ -89,9 +55,9 @@
     <div class="col-md-1"></div>
     <div class="col-md-10"><h3>Reration Pages</h3>
 
-      {{range .page.RelationPage}}
+      {{range .page.Page_Relation_Links}}
 
-      <a href="/App/PageDisplay?pageId={{.PageId}}">{{.PageTitle}}</a>
+      <a href="/App/PageDisplay?pageId={{.Page_Id}}">{{.Page_Title}}</a>
 
       {{end}}
 
@@ -114,5 +80,7 @@
     </div>
   </div>
 </div>
+
+
 
 {{template "footer.html" .}}
