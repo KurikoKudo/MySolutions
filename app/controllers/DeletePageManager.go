@@ -4,15 +4,24 @@ import "MySolutions/app/daos"
 
 func DeletePageManager(pageId int) bool {
 
-	db := daos.gormConnect()
+	db := daos.GormConnect()
 
 	tx := db.Begin()
 
-	daos.DeleteFromPageBodiesDAO(pageId,tx)
 
+	pageBodyErr := daos.DeleteFromPageBodiesDAO(pageId,tx)
 
-	daos.DeleteFromPageRelationsDAO(pageId,tx)
+	if pageBodyErr != nil {
+		tx.Rollback()
+		return false
+	}
 
+	relationsErr := daos.DeleteFromPageRelationsDAO(pageId,tx)
 
-	return false
+	if relationsErr != nil {
+		tx.Rollback()
+		return false
+	}
+
+	return true
 }

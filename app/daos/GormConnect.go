@@ -7,7 +7,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-func gormConnect() *gorm.DB {
+func GormConnect() *gorm.DB {
 	DBMS := "mysql"
 	USER := "mysolutions"
 	PASS := "MySystem2017!"
@@ -25,7 +25,7 @@ func gormConnect() *gorm.DB {
 
 func Migration() {
 
-	db := gormConnect()
+	db := GormConnect()
 
 	db.DropTable(&models.Page_Body{})
 

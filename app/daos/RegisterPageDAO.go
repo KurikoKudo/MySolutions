@@ -7,7 +7,7 @@ import (
 )
 
 func RegisterNewPage(newPage models.Page_Body) uint {
-	db := gormConnect()
+	db := GormConnect()
 
 	db.Create(&newPage)
 	db.First(&newPage)

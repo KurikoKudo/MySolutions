@@ -10,7 +10,7 @@ import (
 func SearchPageDAO(searchingConditionStr string, searchingEvaluation uint, searchingTags []string, searchingTitles []string) []models.Page_Body {
 	var pageList []models.Page_Body
 
-	db := gormConnect()
+	db := GormConnect()
 
 	sqlQuery := "SELECT page_id,page_title,tags,evaluation,page_condition FROM page_bodies WHERE 1 "
 

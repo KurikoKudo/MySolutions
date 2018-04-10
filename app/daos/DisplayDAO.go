@@ -9,7 +9,7 @@ import (
 func DisplayPage(pageId int) models.Page_Display {
 	var displayPage models.Page_Display
 
-	db := gormConnect()
+	db := GormConnect()
 
 	db.First(&displayPage.Page_Body, pageId)
 	db.Where("page_id0 = ? OR page_id1 = ?", pageId, pageId).Find(&displayPage.Page_Relations)
@@ -18,7 +18,7 @@ func DisplayPage(pageId int) models.Page_Display {
 }
 
 func DisplayRelation(relations []uint) []models.Page_Body {
-	db := gormConnect()
+	db := GormConnect()
 
 	var relationPages []models.Page_Body
 
