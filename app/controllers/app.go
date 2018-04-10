@@ -34,3 +34,11 @@ func (c App) PageDisplay(pageId int) revel.Result {
 
 	return c.Render(page)
 }
+
+func (c App) DeletePage(pageId int) revel.Result {
+
+	DeletePageManager(pageId)
+
+	return c.Render(pageId)
+
+}
