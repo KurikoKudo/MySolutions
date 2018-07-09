@@ -3,7 +3,19 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
 
 <div class="container">
-  <div class="col-md-1"></div>
+  <div class="col-md-1">
+    <div class="row">
+        <br><br><br>
+
+            <a href="/App/EditPage?pageId={{.page.Page_Body.Page_Id}}" class="link-btn"><i class="fas fa-edit fa-3x"></i></a>
+        </div>
+    <br>
+      <div class="row">
+      <a href="/App/DeletePage?pageId={{.page.Page_Body.Page_Id}}" class="link-btn"><i class="fas fa-trash-alt fa-3x"></i></a>
+    </div>
+
+
+    </div>
   <div class="col-md-10 center">
 
     <div class="row">
