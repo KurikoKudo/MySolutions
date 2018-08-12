@@ -17,7 +17,7 @@ func (c App) Index() revel.Result {
 }
 
 func (c App) Home() revel.Result {
-	text := "- welcome to YourSolutions -"
+	text := "- Welcome to YourSolutions -"
 	return c.Render(text)
 
 }
@@ -37,8 +37,12 @@ func (c App) PageDisplay(pageId int) revel.Result {
 
 func (c App) DeletePage(pageId int) revel.Result {
 
-	DeletePageManager(pageId)
+	if DeletePageManager(pageId) {
+		return c.Render(pageId)
+	} else {
+		return c.RenderText("削除に失敗しました。")
+	}
 
-	return c.Render(pageId)
+
 
 }

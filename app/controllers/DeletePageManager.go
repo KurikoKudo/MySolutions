@@ -1,6 +1,9 @@
 package controllers
 
-import "MySolutions/app/daos"
+import (
+	"MySolutions/app/daos"
+	"fmt"
+)
 
 func DeletePageManager(pageId int) bool {
 
@@ -8,11 +11,13 @@ func DeletePageManager(pageId int) bool {
 
 	tx := db.Begin()
 
+	fmt.Println(pageId)
 
 	pageBodyErr := daos.DeleteFromPageBodiesDAO(pageId,tx)
 
 	if pageBodyErr != nil {
 		tx.Rollback()
+		fmt.Println("bodiesのエラー")
 		return false
 	}
 
@@ -20,8 +25,10 @@ func DeletePageManager(pageId int) bool {
 
 	if relationsErr != nil {
 		tx.Rollback()
+		fmt.Println("relationのエラー")
 		return false
 	}
 
+	tx.Commit()
 	return true
 }
