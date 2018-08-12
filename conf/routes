@@ -9,10 +9,11 @@
 
 GET     /                                       App.Index
 GET     /home                                   App.Home
-POST    /App/RegistPage                            App.RegistPage
-GET    /App/RegistForm                            App.RegistForm
-POST    /App/SearchManager                       App.SearchManager
+POST    /App/RegistPage                         App.RegistPage
+GET     /App/RegistForm                         App.RegistForm
+POST    /App/SearchManager                      App.SearchManager
 GET     /App/PageDisplay                        App.PageDisplay
+GET     /App/DeletePage                         App.DeletePage
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

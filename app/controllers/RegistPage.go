@@ -13,9 +13,9 @@ import (
 
 func (c App) RegistPage() revel.Result {
 	var newPage models.Page_Body
-	/*
+
 		c.Validation.Required(c.Params.Form.Get("ptitle")).Message("タイトルを入力してください")
-		c.Validation.Required(c.Params.Form.Get("solutions")).Message("タイトルを入力してください")
+		c.Validation.Required(c.Params.Form.Get("solutions")).Message("本文を入力してください")
 		c.Validation.Required(c.Params.Form.Get("tags")).Message("タグを１つ以上入力してください")
 		c.Validation.Required(c.Params.Form.Get("condition")).Message("conditionを入力してください")
 		c.Validation.Required(c.Params.Form.Get("evaluation")).Message("evaluationを入力してください")
@@ -25,10 +25,10 @@ func (c App) RegistPage() revel.Result {
 			c.FlashParams()
 			return c.Redirect(App.RegistForm)
 		}
-	*/
+
 	newPage.Page_Body = c.Params.Form.Get("solutions")
 	newPage.Page_Title = c.Params.Form.Get("ptitle")
-	tagList := strings.Split((c.Params.Form.Get("tags")), ",")
+	tagList := strings.Split(c.Params.Form.Get("tags"), ",")
 	tagsStr := ""
 	for i, v := range tagList {
 		tagList[i] = " " + v + "\n"
